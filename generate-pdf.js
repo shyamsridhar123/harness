@@ -25,6 +25,30 @@ const path = require('path');
   await page.evaluateHandle('document.fonts.ready');
   console.log('Fonts loaded.');
 
+  // Add DRAFT watermark to every page
+  await page.evaluate(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @media print {
+        body::after {
+          content: 'DRAFT';
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(-45deg);
+          font-size: 120px;
+          font-family: Helvetica, Arial, sans-serif;
+          font-weight: bold;
+          color: rgba(200, 0, 0, 0.08);
+          z-index: 9999;
+          pointer-events: none;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  });
+  console.log('DRAFT watermark added.');
+
   // Generate PDF
   const outputPath = path.resolve(__dirname, 'Agent-Harness-WhitePaper.pdf');
   await page.pdf({

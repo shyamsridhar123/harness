@@ -10,11 +10,11 @@
 
 ---
 
-**This is not theory. This is what we learned building agents that broke in production.**
+**Everyone blames the model. We think the orchestration layer is what actually matters.**
 
-Knowledge graph pipelines that hallucinated temporal relationships. Clinical trial platforms where fabricated citations had real consequences. LLM defense systems where prompt injection revealed how little the harness was protecting the model from itself. Every project deposited the same lesson: **when the agent failed, the model wasn't the problem. The orchestration was.**
+This is a philosophy of agent design — born from studying how agents fail, tracing the patterns back to their root causes, and arriving at a conviction: the harness (context assembly, tool integrity, loop discipline, policy enforcement, context lifecycle) determines outcomes more than the model inside it.
 
-This repo contains the white paper, the architectural patterns, a **hands-on prompt guide you can use today** to scaffold and test a production harness, and generative art that makes the philosophy visible.
+This repo contains the white paper, the architectural framework, a **hands-on prompt guide you can use today** to scaffold and test a harness yourself, and generative art that makes the philosophy visible.
 
 </div>
 
@@ -82,7 +82,7 @@ This repo is structured so you can **read the why, then immediately build the wh
 
 | File | What You Get |
 |------|-------------|
-| [**Agent-Harness-POV-WhitePaper.md**](Agent-Harness-POV-WhitePaper.md) | Full white paper — real failure modes from production, the five pillars framework, architectural patterns drawn from Anthropic, Berkeley, and Microsoft Research |
+| [**Agent-Harness-POV-WhitePaper.md**](Agent-Harness-POV-WhitePaper.md) | Full white paper — the five pillars framework, common failure modes and their root causes, architectural patterns drawn from Anthropic, Berkeley, and Microsoft Research |
 | [**Agent-Harness.md**](Agent-Harness.md) | Concise concept document with a worked pagination example showing a controlled harness run step by step |
 
 ### 🔧 Build
@@ -104,15 +104,15 @@ This repo is structured so you can **read the why, then immediately build the wh
 
 ---
 
-## Lessons from the Field
+## The Philosophy in Practice
 
-These aren't abstract principles — they're patterns extracted from systems that failed and were rebuilt:
+Every pillar exists because of a failure mode that's well-documented across the agentic AI space:
 
-- **Knowledge graph agents** that hallucinated temporal relationships → Fixed by context assembly that separated facts from assumptions
-- **Clinical trial platforms** where fabricated citations had real consequences → Fixed by tool integrity with schema validation before every call
-- **LLM defense systems** where prompt injection bypassed all safety → Fixed by policy enforcement that's opaque to the model
-- **$50 API bills from infinite loops** → Fixed by explicit loop discipline with dual-ledger progress tracking
-- **Agents that "forgot" their objective on turn 15** → Fixed by context lifecycle management with three-tier memory
+- **Context Assembly** → Agents that don't know what tools exist or what the user expects aren't dumb — they're uninformed
+- **Tool Integrity** → Malformed tool calls aren't a model problem — they're a bad API design problem
+- **Policy Enforcement** → Destructive actions don't happen because the model lacks judgment — they happen because nobody built the gate
+- **Loop Discipline** → $50 API bills from infinite loops aren't about model reasoning — they're about missing stop signals
+- **Context Lifecycle** → Agents that "forget" their objective on turn 15 aren't forgetful — their context window drowned in noise
 
 > **"Anthropic spent more time optimizing tools than the overall prompt."**  
 > — Anthropic SWE-bench team
@@ -156,6 +156,6 @@ These aren't abstract principles — they're patterns extracted from systems tha
 
 ---
 
-**MIT License** · Born from production failures, not whiteboards
+**MIT License** · A philosophy of agent design, with tools to test it yourself
 
 </div>

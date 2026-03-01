@@ -8,11 +8,11 @@
 
 The AI industry is in the grip of a model attribution error. When an autonomous agent fails — hallucinating, looping, taking destructive action, or losing track of its task — the instinct is to blame the model. *The model needs to be smarter. The model needs more context. The model needs better alignment.*
 
-But across production deployments, research benchmarks, and the lived experience of engineering teams building agentic systems, a different pattern emerges: **the agent harness — the orchestration layer that wraps the model — is the primary determinant of whether an agent is reliable, safe, and useful in production.**
+But across research benchmarks, open-source agent projects, and the lived experience of engineering teams building agentic systems, a different pattern emerges: **the agent harness — the orchestration layer that wraps the model — is the primary determinant of whether an agent is reliable, safe, and useful.**
 
 Two tools can use the same model and produce dramatically different outcomes because their harnesses differ in how they assemble context, validate tool calls, control loops, and enforce policy. The model is the reasoning engine. The harness is the operating system and control plane that makes the engine useful, safe, and repeatable.
 
-This paper argues that engineering teams should shift investment from model selection to harness design. It defines the agent harness, decomposes its five architectural pillars, catalogs the most common failure modes, and provides architectural patterns drawn from Anthropic's research, Berkeley's work on compound AI systems, and production agent deployments.
+This paper argues that engineering teams should shift investment from model selection to harness design. It defines the agent harness, decomposes its five architectural pillars, catalogs the most common failure modes, and provides architectural patterns drawn from Anthropic's research, Berkeley's work on compound AI systems, and open-source agent implementations.
 
 ---
 
@@ -119,7 +119,7 @@ Anthropic's SWE-bench team reported they "spent more time optimizing tools than 
 
 1. **Schema validation before execution.** Every tool call is checked against its JSON Schema before any side effect occurs. Malformed calls return a structured error message that tells the model *what was wrong and how to fix it* — not a generic 400.
 
-2. **Error-proof parameter design (poka-yoke).** Redesign tool arguments so misuse is structurally impossible. Concrete example from Anthropic's production agents: switching `file_path` from relative to absolute eliminated an entire class of path resolution errors. Use `z.string().describe("Absolute path starting with /")`, not `z.string()`.
+2. **Error-proof parameter design (poka-yoke).** Redesign tool arguments so misuse is structurally impossible. Concrete example from Anthropic's agent work: switching `file_path` from relative to absolute eliminated an entire class of path resolution errors. Use `z.string().describe("Absolute path starting with /")`, not `z.string()`.
 
 3. **Output format optimization.** Not all formats are equal for model comprehension:
 
@@ -251,7 +251,7 @@ A 200K-token context window fills up in 10 turns of active tool use. Three file 
 
 ## 4. The Attribution Error: Why Model Failures Are Usually Harness Failures
 
-The most consequential insight from production agent deployments is that **most reliability problems blamed on "the model" are harness design problems.** This section examines the common failure modes and their actual root causes.
+The most consequential insight from studying agent failures is that **most reliability problems blamed on "the model" are harness design problems.** This section examines the common failure modes and their actual root causes.
 
 ### 4.1 The Infinite Loop
 
@@ -419,7 +419,7 @@ Tools should be primitive capabilities: read a file, write a file, run a command
 
 ## 8. From Theory to Implementation: Building a Harness
 
-This paper did not start as theory. It grew out of building agentic systems across domains — knowledge graph pipelines that hallucinated temporal relationships, clinical trial platforms where fabricated citations had real consequences, LLM defense systems where prompt injection revealed how little the harness was doing to protect the model from itself. Each project deposited the same lesson: when the agent failed, the model wasn't the problem. The orchestration was.
+This paper did not start as theory. It grew out of building agentic systems — knowledge graph pipelines that hallucinated temporal relationships, LLM defense systems where prompt injection revealed how little the harness was doing to protect the model from itself, and the iterative process of designing orchestration layers that actually work. Each effort deposited the same lesson: when the agent failed, the model wasn't the problem. The orchestration was.
 
 Sharkbait — an open-source CLI coding assistant built on Bun and TypeScript — became the project where these lessons converged into a deliberate harness architecture. It is not presented here as an exemplary system but as an honest implementation of the five pillars, with concrete code constructs that illustrate where the theory holds, where it extends, and where it remains incomplete.
 
@@ -544,7 +544,7 @@ The question for engineering leaders is not "which model should we use?" It is: 
 
 ## Sources and Further Reading
 
-1. **Anthropic.** "Building Effective Agents." Anthropic Research, 2024. — Agent architecture patterns, ACI design, tool optimization, production deployment guidance.
+1. **Anthropic.** "Building Effective Agents." Anthropic Research, 2024. — Agent architecture patterns, ACI design, tool optimization, deployment guidance.
 
 2. **Zaharia, M. et al.** "The Shift from Models to Compound AI Systems." Berkeley Artificial Intelligence Research (BAIR), February 2024. — Compound system architectures, optimization challenges, production considerations.
 

@@ -6,13 +6,15 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![White Paper](https://img.shields.io/badge/Read-White%20Paper-blue.svg)](Agent-Harness-POV-WhitePaper.md)
+[![Prompt Guide](https://img.shields.io/badge/Prompt-Build%20Guide-green.svg)](.github/prompts/build-harness.prompt.md)
 
 ---
 
-**The AI industry is in the grip of a model attribution error.**
+**This is not theory. This is what we learned building agents that broke in production.**
 
-When an autonomous agent fails — hallucinating, looping, taking destructive action — the instinct is to blame the model.  
-But across production deployments, the pattern is clear: **the agent harness is the primary determinant of whether an agent is reliable, safe, and useful.**
+Knowledge graph pipelines that hallucinated temporal relationships. Clinical trial platforms where fabricated citations had real consequences. LLM defense systems where prompt injection revealed how little the harness was protecting the model from itself. Every project deposited the same lesson: **when the agent failed, the model wasn't the problem. The orchestration was.**
+
+This repo contains the white paper, the architectural patterns, a **hands-on prompt guide you can use today** to scaffold and test a production harness, and generative art that makes the philosophy visible.
 
 </div>
 
@@ -72,26 +74,48 @@ Most reliability problems blamed on "the model" are actually harness design prob
 
 ---
 
-## Repository Contents
+## Not Theory — A Practitioner's Toolkit
 
-| File | Description |
+This repo is structured so you can **read the why, then immediately build the what**:
+
+### 📖 Understand
+
+| File | What You Get |
 |------|-------------|
-| [**Agent-Harness-POV-WhitePaper.md**](Agent-Harness-POV-WhitePaper.md) | Full white paper — defines the harness, decomposes the five pillars, catalogs failure modes, and provides architectural patterns |
-| [**Agent-Harness.md**](Agent-Harness.md) | Concise concept document with worked examples |
+| [**Agent-Harness-POV-WhitePaper.md**](Agent-Harness-POV-WhitePaper.md) | Full white paper — real failure modes from production, the five pillars framework, architectural patterns drawn from Anthropic, Berkeley, and Microsoft Research |
+| [**Agent-Harness.md**](Agent-Harness.md) | Concise concept document with a worked pagination example showing a controlled harness run step by step |
+
+### 🔧 Build
+
+| File | What You Get |
+|------|-------------|
+| [**.github/prompts/build-harness.prompt.md**](.github/prompts/build-harness.prompt.md) | **Actionable prompt guide** — TypeScript type contracts, scaffold order, build directives for each pillar. Feed this to an AI coding agent or use it as a blueprint to implement your own harness from scratch |
+
+> **Try it now:** Open the prompt guide in VS Code with GitHub Copilot, or paste it into Claude/ChatGPT and say *"Scaffold this harness in TypeScript."* You'll have a working five-pillar skeleton in minutes.
+
+### 🎨 See
+
+| File | What You Get |
+|------|-------------|
 | [**five-pillars-poster.html**](five-pillars-poster.html) | Visual poster — the five pillars rendered as structural cartography |
-| [**structural-resonance.html**](structural-resonance.html) | Generative art — particle flow through invisible architecture, visualizing how structure determines reliability |
+| [**structural-resonance.html**](structural-resonance.html) | Generative art — particle flow through invisible architecture, showing how structure determines reliability and the bright center just gets the credit |
 | [**design-philosophy.md**](design-philosophy.md) | Structural Cartography — the visual philosophy behind the artwork |
 | [**algorithmic-art-philosophy.md**](algorithmic-art-philosophy.md) | Structural Resonance — the algorithmic philosophy behind the generative art |
 
 ---
 
-## Key Insights
+## Lessons from the Field
+
+These aren't abstract principles — they're patterns extracted from systems that failed and were rebuilt:
+
+- **Knowledge graph agents** that hallucinated temporal relationships → Fixed by context assembly that separated facts from assumptions
+- **Clinical trial platforms** where fabricated citations had real consequences → Fixed by tool integrity with schema validation before every call
+- **LLM defense systems** where prompt injection bypassed all safety → Fixed by policy enforcement that's opaque to the model
+- **$50 API bills from infinite loops** → Fixed by explicit loop discipline with dual-ledger progress tracking
+- **Agents that "forgot" their objective on turn 15** → Fixed by context lifecycle management with three-tier memory
 
 > **"Anthropic spent more time optimizing tools than the overall prompt."**  
 > — Anthropic SWE-bench team
-
-> **"Success in the LLM space isn't about building the most sophisticated system."**  
-> — Anthropic, Building Effective Agents
 
 ### Six Design Principles
 
@@ -132,6 +156,6 @@ Most reliability problems blamed on "the model" are actually harness design prob
 
 ---
 
-**MIT License** · Made with deliberate harness design
+**MIT License** · Born from production failures, not whiteboards
 
 </div>
